@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>demo</title>
+</head>
+<body>
+    <h3>Dmo</h3>
+    <table border="2px">
+        <th>Name</th>
+        <th>Price</th>
+        <th>category</th>
+        <th>lable</th>
+        <th>des</th>
+        <th>image</th>
+    
+    {% for i in all_data%}
+    <tr>
+        <td>{{i.item_name}}</td>
+        <td>{{i.price}}</td>
+        <td>{{i.category}}</td>
+        <td>{{i.Lable}}</td>
+        <td>{{i.description}}</td>
+        <td>{{i.image.url}}</td>
+        <img>
+      </tr>  
+    {% endfor %}
+
+
+    <div class="col-lg-4 col-md-4 all des">
+        <div class="product-item">
+          
+          <!-- <a href="#"><img src="{% static 'assetes/images/laptop.jpeg' %}" alt=""></a> -->
+          <div class="down-content">
+            <a href="#">
+              <h4>Laptop</h4>
+              
+              <!-- {{value.price}} -->
+            </a>
+            {% for i in all_data %}
+            {{value.item_name}}-->
+            <h6>$45454.50</h6>
+            <p>A laptop computer, sometimes called a notebook computer by manufacturers, is a battery- or AC-powered p</p>
+            <ul class="stars">
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+            </ul>
+            <span>Reviews (72)</span>
+          </div>
+          
+        </div>
+      </div>
+</table>
+</body>
+</html>

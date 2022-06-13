@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
+        rel="stylesheet">
+
+    <title>Sixteen Clothing Products</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!--
+      
+      TemplateMo 546 Sixteen Clothing
+      
+      https://templatemo.com/tm-546-sixteen-clothing
+      
+      -->
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo-sixteen.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+
+</head>
+
+<body>
+    <!-- Page Content -->
+    <div class="page-heading products-heading header-text">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-content">
+                        <h4>new arrivals</h4>
+                        <h2>sixteen products</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="products">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 all des">
+                    <div class="product-item">
+                        <!-- <a href="/info"> </a> -->
+
+                        <img src="{{page_obj.image.url}}">
+                        <div class="down-content">
+                            <h4>{{page_obj.item_name}}</h4>
+                            <h6>{{page_obj.price}}</h6>
+                            <p>{{page_obj.description}}</p>
+                            <div class="xyz" style="display: flex; justify-content: space-between;">
+                                <ul class="stars">
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                </ul>
+                                <!-- <form action="" method="post">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="prod_id" value="{{i.id}}" id="prod_id">
+                                    <button type="submit" class="btn btn-warning shadow px-3 py-1">Buy Now </button>
+                                </form> -->
+                            </div>
+                            <!-- <div class="my-3">
+                                <label for="quantity">Quantity:</label>
+                                <a class="minus-cart btn" pid="{{page_obj.id}}"><i
+                                        class="fas minus-square btn-warning fa-lg">
+                                <span id="total_item">{{page_obj.total_item}}</span>-</i></a>
+
+                                <a class="plus-cart btn" pid="{{page_obj.id}}"><i
+                                        class="fas plus-square btn-warning fa-lg">+</i></a>
+                            </div> -->
+
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>The Total Amount of</h3>
+                            <ul class="list-group">
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                    Amount Rs.<span id="price">{{page_obj.price}}</span></li>
+                                <li class="list-group-item d-flex justify-content-between a lign-items-center px-0">
+                                    Shipping<span>Rs.
+                                        70.00</span></li>
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                    <div>
+                                        <strong>Total</strong> <small>(including VAT)</small>
+                                    </div>
+                                    <span><strong><strong id="totalamount">{{totalamount}}</strong></strong></span>
+                                </li>
+                            </ul>
+                            <div class="d-grid"><a href="#" class="btn btn-primary">Place Order</a></div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+{% endblock content %}

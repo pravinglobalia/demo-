@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
+    rel="stylesheet">
+
+  <title>Sixteen Clothing Products</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <!--
+      
+      TemplateMo 546 Sixteen Clothing
+      
+      https://templatemo.com/tm-546-sixteen-clothing
+      
+      -->
+
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/templatemo-sixteen.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+
+</head>
+
+<body>
+  {% if messages %}
+  {% for message in messages %}
+   {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+  {% endfor %}
+
+{% endif %}
+
+  <!-- Page Content -->
+  <div class="page-heading products-heading header-text">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="text-content">
+            <h4>new arrivals</h4>
+            <h2>sixteen products</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="products">
+    <div class="container" style="position: relative;">
+      <div style="width: auto;">
+
+        {% for i in all_cart %}
+        <div class="col-lg-4 col-md-4 all des">
+
+          <div class="product-item">
+            <a href="/info"> </a>
+            <img src="{{i.item.image.url}}" class="cart-info">
+            <div class="down-content">
+              <a href="{% url 'info' i.item.pk %}">
+                <h4>{{i.item.item_name}}</h4>
+              </a>
+              
+              <h6>{{i.totalamount}}</h6>
+              <p>{{i.item.description}}</p>
+              <!-- <p>Quantity = {{i.total_item}}</p> -->
+              <div class="xyz" style="display: flex; justify-content: space-between;">
+                <div class="my-3">
+                  <label for="quantity">Quantity:</label>
+                  <a href="{% url 'minuscart' i.id %}" class="minus-cart btn" pid="{{i.item.id}}"><i class="fas minus-square btn-warning fa-lg">-</i></a>
+                  <span id="total_item">{{i.total_item}}</span> </i></a>
+                  <a href="{% url 'pluscart' i.id %}" class="plus-cart btn" pid="{{i.item.id}}"><i class="fas plus-square btn-warning fa-lg">+</i></a>
+                </div>
+
+
+              </div>
+              <form action="/removecart/" method="get">
+                {% csrf_token %}
+                <input type="hidden" name="prod_id" value="{{i.item.id}}" id="{{i.item.id}}">
+                <button type="submit" class="btn btn-danger shadow px-3 py-1">Remove cart </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+      <div class="col-sm-4" style="position: absolute; top: 90px; right: 50px;">
+        <div class="form-group">
+          <label for="email">Email: </label>
+          <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+          <small>Please enter your email address</small>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h3>The Total Amount of</h3>
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                Amount Rs.<span id="price">{{all_price}}</span></li>
+              {% comment %} <li class="list-group-item d-flex justify-content-between a lign-items-center px-0">
+                Shipping<span>Rs.
+                  70.00</span></li> {% endcomment %}
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                <div>
+                  <strong>Total</strong> <small>(Including  All Tax)</small>
+                </div>
+                <span><strong id="totalamount">{{all_price}}</strong></span>
+              </li>
+            </ul>
+
+            <div class="card-footer d-flex">
+              <button class="btn btn-success ml-auto" href="{% url 'api_checkout_session' "all_price" %}" id="checkout-button">Checkout</button>
+           </div>
+            {% comment %} <form method="post">
+              {% csrf_token %}
+              <button class="btn btn-success ml-auto" href="{% url 'api_checkout_session' "all_price" %}" id="checkout-button">Checkout</button>
+            </form> {% endcomment %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+
+<!-- Add JavaScript Here--> 
+<script src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript">
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe('{{ stripe_publishable_key }}');
+    console.log("--------->",stripe)
+    var checkoutButton = document.getElementById('checkout-button');
+    console.log("hdjfvsd dfhdfghfrtg frghfgfg fghfghf fghfg fghfghf ")
+    checkoutButton.addEventListener('click', function () {
+
+        // Create a new Checkout Session using the server-side endpoint you
+        // created in step 3.
+        fetch("{% url 'api_checkout_session' id="all_price" %}", {
+            method: 'POST',
+            body: JSON.stringify(
+                { email : "abc@gmail.com"}
+
+
+            )
+        })
+            .then(function (response) {
+               console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>",response)
+               return response.json();
+            })
+            .then(function (session) {
+                return stripe.redirectToCheckout({ sessionId: session.sessionId });
+            })
+            .then(function (result) {
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, you should display the localized error message to your
+                // customer using `error.message`.
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+    });
+</script>
+{% endblock content %}
